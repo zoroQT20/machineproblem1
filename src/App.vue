@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <div class="header">
+      <div class="logo-container">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Seal_of_the_University_of_Santo_Tomas.svg/303px-Seal_of_the_University_of_Santo_Tomas.svg.png?20210111031237" class="logo" />
+      </div>
       <h4 class="title">UST BMI Calculator</h4>
     </div>
 
@@ -58,23 +61,21 @@
 import { ref } from 'vue';
 
 export default {
-  data() {
-    return {
-      weight: null,
-      height: null,
-      bmiResult: null,
-    };
-  },
-  methods: {
-    calculateBMI() {
-      if (this.weight && this.height) {
-        const heightInMeters = this.height / 100;
-        this.bmiResult = this.weight / (heightInMeters * heightInMeters);
+  setup() {
+    const weight = ref(null);
+    const height = ref(null);
+    const bmiResult = ref(null);
+
+    const calculateBMI = () => {
+      if (weight.value && height.value) {
+        const heightInMeters = height.value / 100;
+        bmiResult.value = weight.value / (heightInMeters * heightInMeters);
       } else {
         alert("Please enter weight and height.");
       }
-    },
-    getBMICategory(bmi) {
+    };
+
+    const getBMICategory = (bmi) => {
       if (bmi < 18.5) {
         return "Underweight";
       } else if (bmi >= 18.5 && bmi < 24.9) {
@@ -84,45 +85,63 @@ export default {
       } else {
         return "Obese";
       }
-    },
+    };
+
+    return {
+      weight,
+      height,
+      bmiResult,
+      calculateBMI,
+      getBMICategory,
+    };
   },
 };
 </script>
 
 <style>
-/* Your styles remain unchanged */
-</style>
-
-<style>
 body {
-  background-color: #ffe600; /* UST Gold */
-  color: #00205b; /* UST Blue text color */
-  font-family: 'Arial', sans-serif; /* Font family for better visibility */
+  background-color: #ffe600;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #090a0c;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
 }
 
 .header {
   text-align: center;
-  background-color: #00205b; /* UST Blue */
-  color: #ffffff;
-  padding: 20px;
-  margin-bottom: 20px;
+  background-color: #d3a50c;
+  color: #090a0c;
+  padding: 5px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 2em;
+}
+
+.logo-container {
+  margin-right: 10px;
 }
 
 .title {
   margin-bottom: 0;
 }
 
+.logo {
+  max-width: 100px;
+}
+
 .calculator {
-  border: 2px solid #00205b; /* UST Blue */
+  border: 2px solid #090a0c;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
   max-width: 400px;
   width: 80%;
   margin: 0 auto;
-  background-color: #ffffff; /* White background color for the calculator */
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -131,8 +150,8 @@ body {
 }
 
 button {
-  background-color: #00205b; /* UST Blue */
-  color: #ffffff;
+  background-color: #090a0c;
+  color: #c0c4b0;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -141,7 +160,7 @@ button {
 }
 
 button:hover {
-  background-color: #001732; /* Darker shade of UST Blue */
+  background-color: #001732;
 }
 
 .result {
@@ -149,7 +168,7 @@ button:hover {
 }
 
 .category {
-  color: #00205b; /* UST Blue */
+  color: #090a0c;
   font-weight: bold;
 }
 
@@ -158,7 +177,6 @@ button:hover {
   margin-top: 40px;
 }
 
-/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -166,13 +184,14 @@ table {
 }
 
 th, td {
-  border: 1px solid #00205b; /* UST Blue */
-  padding: 10px;
+  border: 1px solid #090a0c;
+  padding: 15px;
   text-align: center;
 }
 
 th {
-  background-color: #00205b; /* UST Blue */
-  color: #ffffff;
+  background-color: #d3a50c;
+  color: #090a0c;
+  font-weight: bold;
 }
 </style>
